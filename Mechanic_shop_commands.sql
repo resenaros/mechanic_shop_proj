@@ -1,5 +1,6 @@
 -- Mechanic Shop Commands SQL
 -- This script creates the mechanic shop database and its tables, and provides commands to interact with the database.
+
 -- Create  Database
 CREATE DATABASE mechanic_shop;
 
