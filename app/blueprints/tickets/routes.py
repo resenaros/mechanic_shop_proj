@@ -5,6 +5,7 @@ from app.models import db, Ticket, Mechanic
 from .schemas import ticket_schema, tickets_schema
 from app.blueprints.mechanics.schemas import mechanics_schema  # <-- import here
 from . import tickets_bp
+from app.extensions import cache, limiter
 
 # POST '/' - Create ticket
 @tickets_bp.route('/', methods=['POST'])
@@ -30,6 +31,7 @@ def create_ticket():
 
 # GET '/' - Get all tickets
 @tickets_bp.route('/', methods=['GET'])
+@cache.cached(timeout=60)  # Cache the response for 60 seconds
 def get_tickets():
     query = select(Ticket)
     tickets = db.session.execute(query).scalars().all()
@@ -37,6 +39,7 @@ def get_tickets():
 
 # GET '/<ticket_id>/mechanics' - Get all mechanics for a specific ticket
 @tickets_bp.route('/<int:ticket_id>/mechanics', methods=['GET'])
+@cache.cached(timeout=60)  # Cache the response for 60 seconds
 def get_ticket_mechanics(ticket_id):
     ticket = db.session.get(Ticket, ticket_id)
     if not ticket:
@@ -80,6 +83,7 @@ def remove_mechanic(ticket_id, mechanic_id):
 
 # PATCH '/<ticket_id>' - Partially update a ticket
 @tickets_bp.route('/<int:ticket_id>', methods=['PATCH'])
+@limiter.limit("5 per day")  # Rate limit to 5 requests per day
 def patch_ticket(ticket_id):
     """
     Partially update a ticket. Only fields provided in the request will be updated.

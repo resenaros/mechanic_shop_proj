@@ -4,9 +4,11 @@ from sqlalchemy import select
 from app.models import db, Mechanic
 from .schemas import mechanic_schema, mechanics_schema
 from . import mechanics_bp
+from app.extensions import cache, limiter
 
 # POST '/' : Creates a new Mechanic
 @mechanics_bp.route('/', methods=['POST'])
+@limiter.limit("5/ day")  # Rate limit to 5 requests per day
 def create_mechanic():
     try:
         mechanic_data = mechanic_schema.load(request.json)
@@ -26,6 +28,7 @@ def create_mechanic():
 
 # GET '/': Retrieves all Mechanics
 @mechanics_bp.route('/', methods=['GET'])
+@cache.cached(timeout=60)  # Cache the response for 60 seconds
 def get_mechanics():
     query = select(Mechanic)
     mechanics = db.session.execute(query).scalars().all()
@@ -41,6 +44,7 @@ def get_mechanic(id):
 
 # PUT '/<int:id>': Updates a specific Mechanic
 @mechanics_bp.route('/<int:id>', methods=['PUT'])
+@limiter.limit("10 per day")  # Rate limit to 10 requests per day
 def update_mechanic(id):
     mechanic = db.session.get(Mechanic, id)
     if not mechanic:
@@ -59,6 +63,7 @@ def update_mechanic(id):
 
 # PATCH '/<int:id>': Partially updates a specific Mechanic
 @mechanics_bp.route('/<int:id>', methods=['PATCH'])
+@limiter.limit("5 per day")  # Rate limit to 5 requests per day
 def patch_mechanic(id):
     mechanic = db.session.get(Mechanic, id)
     if not mechanic:
@@ -77,6 +82,7 @@ def patch_mechanic(id):
 
 # DELETE '/<int:id>': Deletes a specific Mechanic
 @mechanics_bp.route('/<int:id>', methods=['DELETE'])
+@limiter.limit("5 per day")  # Rate limit to 5 requests per day
 def delete_mechanic(id):
     mechanic = db.session.get(Mechanic, id)
     if not mechanic:

@@ -4,10 +4,12 @@ from marshmallow import ValidationError
 from sqlalchemy import select
 from app.models import db, Customer
 from . import customers_bp
+from app.extensions import cache, limiter
 
 # Customer Routes
 # Create a customer
 @customers_bp.route('/', methods=['POST'])
+@limiter.limit("5 per day")  # Rate limit to 5 requests per day
 def create_customer():     
     try:
         customer_data = customer_schema.load(request.json)
@@ -26,6 +28,7 @@ def create_customer():
 
 #GET ALL customers
 @customers_bp.route("/", methods=['GET'])
+@cache.cached(timeout=60)  # Cache the response for 60 seconds
 def get_customers():
     query = select(Customer)
     customers = db.session.execute(query).scalars().all()
@@ -43,6 +46,7 @@ def get_customer(customer_id):
 
 #UPDATE SPECIFIC customer
 @customers_bp.route("/<int:customer_id>", methods=['PUT'])
+@limiter.limit("10 per day")  # Rate limit to 10 requests per day
 def update_customer(customer_id):
     customer = db.session.get(Customer, customer_id)
 
@@ -62,6 +66,7 @@ def update_customer(customer_id):
 
 #PATCH SPECIFIC customer
 @customers_bp.route("/<int:customer_id>", methods=['PATCH'])
+@limiter.limit("5 per day")  # Rate limit to 5 requests per day
 def patch_customer(customer_id):
     customer = db.session.get(Customer, customer_id)
 
@@ -81,6 +86,7 @@ def patch_customer(customer_id):
 
 #DELETE SPECIFIC customer
 @customers_bp.route("/<int:customer_id>", methods=['DELETE'])
+@limiter.limit("5 per day")  # Rate limit to 5 requests per day
 def delete_customer(customer_id):
     customer = db.session.get(Customer, customer_id)
 
