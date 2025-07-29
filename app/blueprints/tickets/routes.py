@@ -6,6 +6,7 @@ from .schemas import ticket_schema, tickets_schema
 from app.blueprints.mechanics.schemas import mechanics_schema  # <-- import here
 from . import tickets_bp
 from app.extensions import cache, limiter
+from app.utils.util import token_required
 
 # POST '/' - Create ticket
 @tickets_bp.route('/', methods=['POST'])
@@ -35,6 +36,13 @@ def create_ticket():
 def get_tickets():
     query = select(Ticket)
     tickets = db.session.execute(query).scalars().all()
+    return tickets_schema.jsonify(tickets), 200
+
+# --- ADDED: Get tickets related to the authenticated customer ---
+@tickets_bp.route('/my-tickets', methods=['GET'])
+@token_required
+def get_my_tickets(customer_id):
+    tickets = db.session.query(Ticket).filter_by(customer_id=customer_id).all()
     return tickets_schema.jsonify(tickets), 200
 
 # GET '/<ticket_id>/mechanics' - Get all mechanics for a specific ticket

@@ -1,12 +1,14 @@
 /project
 ├── /application
 │   ├── __init__.py - create_app() lives here
-│   ├── extensions.py
+│   ├── extensions.py  <--- Where we will initialize 3rd party extensions
 │   ├── /blueprints
 │		│		├──/user
-│		│				├──__init__.py  - Initializt User Blueprint
+│		│				├──__init__.py  - initialize User Blueprint
 │		│				├── routes.py  - Create User Controllers/routes
 │		│				└── userSchemas.py
+│   ├── /utils  # <---     New Folder
+│		│	        └── util.py #<---   File for token functions
 │   └── models.py
 ├── app.py
 └── config.py

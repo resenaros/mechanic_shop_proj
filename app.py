@@ -6,7 +6,8 @@ app = create_app('DevelopmentConfig')
 
 # Create the table
 with app.app_context():
-	db.create_all()
+    # db.drop_all()  # Drop all tables if they exist
+    db.create_all()
 
 # Run the application
 if __name__ == "__main__":
