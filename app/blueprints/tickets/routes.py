@@ -2,7 +2,7 @@ from flask import request, jsonify
 from marshmallow import ValidationError
 from sqlalchemy import select
 from app.models import db, Ticket, Mechanic
-from .schemas import ticket_schema, tickets_schema
+from .schemas import ticket_schema, tickets_schema, edit_ticket_schema
 from app.blueprints.mechanics.schemas import mechanics_schema  # <-- import here
 from . import tickets_bp
 from app.extensions import cache, limiter
@@ -121,6 +121,34 @@ def patch_ticket(ticket_id):
 
     if not updated:
         return jsonify({"error": "No valid fields provided for update."}), 400
+
+    db.session.commit()
+    return ticket_schema.jsonify(ticket), 200
+
+@tickets_bp.route('/<int:ticket_id>', methods=['PUT'])
+def update_ticket(ticket_id):
+    try:
+        ticket_edits = edit_ticket_schema.load(request.json)
+    except ValidationError as e:
+        return jsonify(e.messages), 400
+
+
+    query = select(Ticket).where(Ticket.id == ticket_id)
+    ticket = db.session.execute(query).scalars().first()
+
+    # Add or remove mechanics based on the provided IDs
+    for mechanic_id in ticket_edits['add_mechanic_ids']:
+        query = select(Mechanic).where(Mechanic.id == mechanic_id)
+        mechanic = db.session.execute(query).scalars().first()
+        if mechanic and mechanic not in ticket.mechanics:
+            ticket.mechanics.append(mechanic)
+
+    # Remove mechanics based on the provided IDs
+    for mechanic_id in ticket_edits['remove_mechanic_ids']:
+        query = select(Mechanic).where(Mechanic.id == mechanic_id)
+        mechanic = db.session.execute(query).scalars().first()
+        if mechanic and mechanic in ticket.mechanics:
+            ticket.mechanics.remove(mechanic)
 
     db.session.commit()
     return ticket_schema.jsonify(ticket), 200
