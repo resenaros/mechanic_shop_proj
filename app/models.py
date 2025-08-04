@@ -43,6 +43,12 @@ class Ticket(Base):
     customer: Mapped['Customer'] = db.relationship(back_populates='tickets')
     mechanics: Mapped[List['Mechanic']] = db.relationship(secondary=ticket_mechanic, back_populates='tickets')
 
+     # --- Inventory Relationship ---
+    parts: Mapped[List['Inventory']] = db.relationship(
+        'Inventory',
+        secondary='ticket_inventory',
+        back_populates='tickets'
+    )
     
 class Mechanic(Base):
     __tablename__ = "mechanics"
@@ -54,3 +60,25 @@ class Mechanic(Base):
     salary: Mapped[float] = mapped_column(db.Float, nullable=False)
 
     tickets: Mapped[List['Ticket']] = db.relationship(secondary=ticket_mechanic, back_populates='mechanics')
+
+# --- Inventory Many-to-Many Junction Table (with quantity field) ---
+# This table links tickets and inventory parts, and tracks how many of each part is used in a ticket.
+class TicketInventory(Base):
+    __tablename__ = 'ticket_inventory'
+    ticket_id: Mapped[int] = mapped_column(db.ForeignKey('tickets.id'), primary_key=True)
+    inventory_id: Mapped[int] = mapped_column(db.ForeignKey('inventory.id'), primary_key=True)
+    quantity: Mapped[int] = mapped_column(db.Integer, nullable=False, default=1)
+
+# --- Inventory Model ---
+class Inventory(Base):
+    __tablename__ = 'inventory'
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(db.String(255), nullable=False)
+    price: Mapped[float] = mapped_column(db.Float, nullable=False)
+
+    # Relationship to tickets through the junction table
+    tickets: Mapped[List['Ticket']] = db.relationship(
+        'Ticket',
+        secondary='ticket_inventory',
+        back_populates='parts'
+    )

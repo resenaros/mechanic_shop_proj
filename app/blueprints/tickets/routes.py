@@ -1,7 +1,8 @@
 from flask import request, jsonify
 from marshmallow import ValidationError
 from sqlalchemy import select
-from app.models import db, Ticket, Mechanic
+from app.models import db, Ticket, Mechanic, Inventory, TicketInventory
+from app.blueprints.inventory.schemas import inventory_schema
 from .schemas import ticket_schema, tickets_schema, edit_ticket_schema
 from app.blueprints.mechanics.schemas import mechanics_schema  # <-- import here
 from . import tickets_bp
@@ -152,3 +153,36 @@ def update_ticket(ticket_id):
 
     db.session.commit()
     return ticket_schema.jsonify(ticket), 200
+
+# --- Add Part to Service Ticket ---
+@tickets_bp.route('/<int:ticket_id>/add-part', methods=['POST'])
+def add_part_to_ticket(ticket_id):
+    """
+    Adds a part to a ticket.
+    JSON format:
+    {
+        "inventory_id": int,
+        "quantity": int (optional, default 1)
+    }
+    """
+    ticket = db.session.get(Ticket, ticket_id)
+    if not ticket:
+        return jsonify({"error": "Ticket not found"}), 404
+
+    inventory_id = request.json.get('inventory_id')
+    quantity = request.json.get('quantity', 1)
+
+    part = db.session.get(Inventory, inventory_id)
+    if not part:
+        return jsonify({"error": "Part not found"}), 404
+
+    # Check if already exists
+    junction = db.session.query(TicketInventory).filter_by(ticket_id=ticket_id, inventory_id=inventory_id).first()
+    if junction:
+        junction.quantity += quantity
+    else:
+        junction = TicketInventory(ticket_id=ticket_id, inventory_id=inventory_id, quantity=quantity)
+        db.session.add(junction)
+
+    db.session.commit()
+    return jsonify({"message": f"Added {quantity} of part {part.name} to ticket {ticket_id}"}), 200

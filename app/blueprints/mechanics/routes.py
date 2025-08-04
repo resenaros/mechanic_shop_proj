@@ -2,9 +2,49 @@ from flask import request, jsonify
 from marshmallow import ValidationError
 from sqlalchemy import select
 from app.models import db, Mechanic
-from .schemas import mechanic_schema, mechanics_schema
+from .schemas import mechanic_schema, mechanics_schema, mechanic_login_schema
 from . import mechanics_bp
 from app.extensions import cache, limiter
+from app.utils.util import encode_mechanic_token, mechanic_token_required
+
+# ---------- NEW: Mechanic Login Route ----------
+@mechanics_bp.route('/login', methods=['POST'])
+def mechanic_login():
+    """
+    Mechanics login route.
+    Validates credentials and returns a JWT token for mechanics.
+    """
+    try:
+        credentials = mechanic_login_schema.load(request.json)
+        email = credentials['email']
+        password = credentials['password']
+    except ValidationError as e:
+        return jsonify({'messages': e.messages}), 400
+
+    query = select(Mechanic).where(Mechanic.email == email)
+    mechanic = db.session.execute(query).scalar_one_or_none()
+
+    if mechanic and mechanic.password == password:
+        auth_token = encode_mechanic_token(mechanic.id)
+        response = {
+            "status": "success",
+            "message": "Successfully Logged In",
+            "auth_token": auth_token
+        }
+        return jsonify(response), 200
+    else:
+        return jsonify({'messages': "Invalid email or password"}), 401
+
+# --- Example: Protect a route so only mechanics can use it ---
+@mechanics_bp.route('/protected', methods=['GET'])
+@mechanic_token_required
+def mechanic_protected(mechanic_id):
+    """
+    Example protected route for mechanics only.
+    mechanic_id is passed from the decorator.
+    """
+    return jsonify({"message": f"Mechanic {mechanic_id} accessed this route!"}), 200
+
 
 # POST '/' : Creates a new Mechanic
 @mechanics_bp.route('/', methods=['POST'])
@@ -51,6 +91,7 @@ def get_mechanic(id):
 # PUT '/<int:id>': Updates a specific Mechanic
 @mechanics_bp.route('/<int:id>', methods=['PUT'])
 @limiter.limit("10 per day")  # Rate limit to 10 requests per day
+@mechanic_token_required
 def update_mechanic(id):
     mechanic = db.session.get(Mechanic, id)
     if not mechanic:
@@ -70,6 +111,7 @@ def update_mechanic(id):
 # PATCH '/<int:id>': Partially updates a specific Mechanic
 @mechanics_bp.route('/<int:id>', methods=['PATCH'])
 @limiter.limit("5 per day")  # Rate limit to 5 requests per day
+@mechanic_token_required
 def patch_mechanic(id):
     mechanic = db.session.get(Mechanic, id)
     if not mechanic:
@@ -89,6 +131,7 @@ def patch_mechanic(id):
 # DELETE '/<int:id>': Deletes a specific Mechanic
 @mechanics_bp.route('/<int:id>', methods=['DELETE'])
 @limiter.limit("5 per day")  # Rate limit to 5 requests per day
+@mechanic_token_required
 def delete_mechanic(id):
     mechanic = db.session.get(Mechanic, id)
     if not mechanic:
