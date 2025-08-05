@@ -1,8 +1,10 @@
+import os
 from app.models import db
 from app import create_app
 
+config_name = os.getenv('FLASK_CONFIG', 'DevelopmentConfig')
 # Create the Flask application
-app = create_app('DevelopmentConfig')
+app = create_app(config_name)
 
 # Create the table
 with app.app_context():

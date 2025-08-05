@@ -1,14 +1,26 @@
 /project
+├── app.py                      # Main entry point, runs the app
+├── config.py                   # Configuration classes
 ├── /application
-│   ├── __init__.py - create_app() lives here
-│   ├── extensions.py  <--- Where we will initialize 3rd party extensions
+│   ├── __init__.py             # create_app() factory, registers blueprints, initializes extensions
+│   ├── extensions.py           # Initialize third-party extensions (db, ma, cache, limiter, migrate)
+│   ├── models.py               # SQLAlchemy models (Mechanic, Customer, Ticket, Inventory, etc.)
+│   ├── /utils                  # Utility functions
+│   │   └── util.py             # Token functions, JWT helpers, etc.
 │   ├── /blueprints
-│		│		├──/user
-│		│				├──__init__.py  - initialize User Blueprint
-│		│				├── routes.py  - Create User Controllers/routes
-│		│				└── userSchemas.py
-│   ├── /utils  # <---     New Folder
-│		│	        └── util.py #<---   File for token functions
-│   └── models.py
-├── app.py
-└── config.py
+│   │   ├── /customers
+│   │   │   ├── __init__.py     # Initialize customers Blueprint
+│   │   │   ├── routes.py       # Customer controllers/routes
+│   │   │   └── customerSchemas.py
+│   │   ├── /mechanics
+│   │   │   ├── __init__.py     # Initialize mechanics Blueprint
+│   │   │   ├── routes.py       # Mechanic controllers/routes (login, protected, CRUD)
+│   │   │   └── mechanicSchemas.py
+│   │   ├── /tickets
+│   │   │   ├── __init__.py     # Initialize tickets Blueprint
+│   │   │   ├── routes.py       # Ticket controllers/routes
+│   │   │   └── ticketSchemas.py
+│   │   ├── /inventory
+│   │   │   ├── __init__.py     # Initialize inventory Blueprint
+│   │   │   ├── routes.py       # Inventory controllers/routes
+│   │   │   └── inventorySchemas.py

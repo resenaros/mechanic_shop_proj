@@ -16,6 +16,8 @@ This project is a RESTful API for managing service tickets in a mechanic shop. I
 - **Assign and remove mechanics from tickets**
 - **Retrieve all mechanics assigned to a given ticket**
 - **Robust validation and error handling**
+- **Retrieve all inventory items assigned to a given ticket** 
+- **Robust validation and error handling**
 
 ## Example API Endpoints
 
@@ -27,6 +29,22 @@ This project is a RESTful API for managing service tickets in a mechanic shop. I
 | PUT    | `/tickets/{ticket_id}/assign-mechanic/{mechanic_id}` | Assign a mechanic to a ticket           |
 | PUT    | `/tickets/{ticket_id}/remove-mechanic/{mechanic_id}` | Remove a mechanic from a ticket         |
 | GET    | `/tickets/{ticket_id}/mechanics`                     | Get all mechanics for a specific ticket |
+| GET    | `/inventory/`                                        | Get all inventory items                 |
+| PATCH  | `/inventory/{inventory_id}`                          | Partially update an inventory item      |
+| DELETE | `/inventory/{inventory_id}`                          | Delete an inventory item                |
+
+## Entity Relationship Diagram (ERD)
+Path to ERD:
+![ERD](mechanic_shop_ERD.svg)
+
+- Customers can have many tickets (one-to-many).
+- Tickets can be assigned to many mechanics (many-to-many via ticket_mechanic).
+- Tickets can be assigned to many inventory items (many-to-many via ticket_inventory).
+
+## Authentication
+
+Certain endpoints require JWT authentication (mechanic login).  
+Include your JWT token in the `Authorization` header as `Bearer <token>`.
 
 ## Learnings
 
@@ -38,7 +56,7 @@ This project is a RESTful API for managing service tickets in a mechanic shop. I
 
 ## Database Navigation
 
-A **SQL statement sheet** is provided in this repository to help you navigate and query the MySQL database using MySQL Workbench. Use it to:
+A [SQL statement sheet](Mechanic_shop_commands.sql) is provided in this repository to help you navigate and query the MySQL database using MySQL Workbench. Use it to:
 
 - View, insert, or update records directly in the database
 - Debug or inspect relationships and table contents during development
@@ -51,8 +69,15 @@ A **SQL statement sheet** is provided in this repository to help you navigate an
 2. **Set up the MySQL database** (create the database and update your config).
 
 3. **Run the Flask app:**  
-   `flask run`
+   `flask run` or run python file via `python app.py`
 
 4. **Test endpoints using Postman** with the recommended collection naming conventions.
+
+## Environment Variables
+
+Set the following environment variables before running the app:
+- `DATABASE_URL`
+- `SECRET_KEY`
+- `JWT_SECRET_KEY`
 
 ---

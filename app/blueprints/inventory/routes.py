@@ -53,6 +53,22 @@ def update_inventory(part_id):
     db.session.commit()
     return inventory_schema.jsonify(part), 200
 
+# Patch a part (for partial updates)
+@inventory_bp.route('/<int:part_id>', methods=['PATCH'])
+@limiter.limit("10 per day")
+def patch_inventory(part_id):
+    part = db.session.get(Inventory, part_id)
+    if not part:
+        return jsonify({"error": "Part not found."}), 404
+    try:
+        part_data = inventory_schema.load(request.json, partial=True)
+    except ValidationError as e:
+        return jsonify(e.messages), 400
+    for key, value in part_data.items():
+        setattr(part, key, value)
+    db.session.commit()
+    return inventory_schema.jsonify(part), 200
+
 # Delete a part
 @inventory_bp.route('/<int:part_id>', methods=['DELETE'])
 @limiter.limit("5 per day")

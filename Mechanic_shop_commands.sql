@@ -31,5 +31,17 @@ SELECT * FROM mechanics;
 -- show all data in the tickets table
 SELECT * FROM tickets;
 
+-- show all data in the inventory table
+SELECT * FROM inventory;
+
 -- show all data in the ticket_mechanic junction table
 SELECT * FROM ticket_mechanic;
+
+-- show all data in the ticket_inventory junction table
+SELECT * FROM ticket_inventory;
+
+-- Update mechanic passwords for showcase
+UPDATE mechanics SET password='mechanicpass' WHERE id IN (3, 4);
+
+-- Update all mechanics password (demo)
+UPDATE mechanics SET password='mechanicpass';

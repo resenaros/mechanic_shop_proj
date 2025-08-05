@@ -58,7 +58,8 @@ class Mechanic(Base):
     email: Mapped[str] = mapped_column(db.String(255), nullable=False, unique=True)
     phone: Mapped[str] = mapped_column(db.String(255), nullable=False)
     salary: Mapped[float] = mapped_column(db.Float, nullable=False)
-
+    password: Mapped[str] = mapped_column(db.String(255), nullable=False)
+    
     tickets: Mapped[List['Ticket']] = db.relationship(secondary=ticket_mechanic, back_populates='mechanics')
 
 # --- Inventory Many-to-Many Junction Table (with quantity field) ---
