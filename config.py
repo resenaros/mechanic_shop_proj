@@ -15,7 +15,10 @@ class DevelopmentConfig:
     SQLALCHEMY_DATABASE_URI = f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
     
 class TestingConfig:
-    pass
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:' # Use in-memory SQLite database for testing
+    DEBUG = True
+    CACHE_TYPE = 'SimpleCache'  # Use simple cache for testing
+    SQLALCHEMY_TRACK_MODIFICATIONS = False    
 
 class ProductionConfig:
     pass

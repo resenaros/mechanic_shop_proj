@@ -37,11 +37,12 @@ def token_required(f):
             customer_id = data['sub']  # Fetch the customer ID
 
         except jose.exceptions.ExpiredSignatureError:
-             return jsonify({'message': 'Token has expired!'}), 401
+            return jsonify({'message': 'Token has expired!'}), 401
         except jose.exceptions.JWTError:
-             return jsonify({'message': 'Invalid token!'}), 401
+            return jsonify({'message': 'Invalid token!'}), 401
 
-        return f(customer_id, *args, **kwargs)
+        kwargs['token_customer_id'] = customer_id  # Pass the customer ID to the route
+        return f(*args, **kwargs)
 
     return decorated
 
@@ -87,6 +88,7 @@ def mechanic_token_required(f):
         except jose.exceptions.JWTError:
             return jsonify({'message': 'Invalid token!'}), 401
 
-        return f(mechanic_id, *args, **kwargs)
+        kwargs['token_mechanic_id'] = mechanic_id  # Pass the mechanic ID to the route
+        return f(*args, **kwargs)
 
     return decorated

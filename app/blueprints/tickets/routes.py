@@ -42,8 +42,8 @@ def get_tickets():
 # --- ADDED: Get tickets related to the authenticated customer ---
 @tickets_bp.route('/my-tickets', methods=['GET'])
 @token_required
-def get_my_tickets(customer_id):
-    tickets = db.session.query(Ticket).filter_by(customer_id=customer_id).all()
+def get_my_tickets(token_customer_id=None):
+    tickets = db.session.query(Ticket).filter_by(customer_id=token_customer_id).all()
     return tickets_schema.jsonify(tickets), 200
 
 # GET '/<ticket_id>/mechanics' - Get all mechanics for a specific ticket

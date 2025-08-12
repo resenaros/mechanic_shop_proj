@@ -92,10 +92,13 @@ def get_mechanic(id):
 @mechanics_bp.route('/<int:id>', methods=['PUT'])
 @limiter.limit("10 per day")  # Rate limit to 10 requests per day
 @mechanic_token_required
-def update_mechanic(id):
+def update_mechanic(id, token_mechanic_id=None):
     mechanic = db.session.get(Mechanic, id)
     if not mechanic:
         return jsonify({"error": "Mechanic not found."}), 404
+    if str(id) != str(token_mechanic_id):
+        return jsonify({"error": "You can only update your own mechanic information."}), 403
+    
 
     try:
         mechanic_data = mechanic_schema.load(request.json)
@@ -112,10 +115,13 @@ def update_mechanic(id):
 @mechanics_bp.route('/<int:id>', methods=['PATCH'])
 @limiter.limit("5 per day")  # Rate limit to 5 requests per day
 @mechanic_token_required
-def patch_mechanic(id):
+def patch_mechanic(id, token_mechanic_id=None):
     mechanic = db.session.get(Mechanic, id)
     if not mechanic:
         return jsonify({"error": "Mechanic not found."}), 404
+    if str(id) != str(token_mechanic_id):
+        return jsonify({"error": "You can only update your own mechanic information."}), 403
+    
 
     try:
         mechanic_data = mechanic_schema.load(request.json, partial=True)
@@ -132,10 +138,13 @@ def patch_mechanic(id):
 @mechanics_bp.route('/<int:id>', methods=['DELETE'])
 @limiter.limit("5 per day")  # Rate limit to 5 requests per day
 @mechanic_token_required
-def delete_mechanic(id):
+def delete_mechanic(id, token_mechanic_id=None):
+
     mechanic = db.session.get(Mechanic, id)
     if not mechanic:
         return jsonify({"error": "Mechanic not found."}), 404
+    if str(id) != str(token_mechanic_id):
+        return jsonify({"error": "You can only delete your own mechanic account."}), 403
 
     db.session.delete(mechanic)
     db.session.commit()

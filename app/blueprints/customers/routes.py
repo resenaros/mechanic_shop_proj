@@ -78,12 +78,14 @@ def get_customer(customer_id):
     return jsonify({"error": "Customer not found."}), 404
 
 #UPDATE SPECIFIC customer
-@customers_bp.route("/", methods=['PUT'])
+@customers_bp.route("/<int:customer_id>", methods=['PUT'])
 @token_required
 @limiter.limit("10 per day")  # Rate limit to 10 requests per day
-def update_customer(customer_id):
+def update_customer(customer_id, token_customer_id=None):
+    if str(customer_id) != str(token_customer_id):
+        return jsonify({"error": "You can only update your own customer information."}), 403
+    
     customer = db.session.get(Customer, customer_id)
-
     if not customer:
         return jsonify({"error": "Customer not found."}), 404
 
@@ -99,12 +101,14 @@ def update_customer(customer_id):
     return customer_schema.jsonify(customer), 200
 
 #PATCH SPECIFIC customer
-@customers_bp.route("/", methods=['PATCH'])
+@customers_bp.route("/<int:customer_id>", methods=['PATCH'])
 @token_required
 @limiter.limit("5 per day")  # Rate limit to 5 requests per day
-def patch_customer(customer_id):
+def patch_customer(customer_id, token_customer_id=None):
+    if str(customer_id) != str(token_customer_id):
+        return jsonify({"error": "You can only update your own customer information."}), 403
+    
     customer = db.session.get(Customer, customer_id)
-
     if not customer:
         return jsonify({"error": "Customer not found."}), 404
 
@@ -120,12 +124,14 @@ def patch_customer(customer_id):
     return customer_schema.jsonify(customer), 200
 
 #DELETE SPECIFIC customer
-@customers_bp.route("/", methods=['DELETE'])
+@customers_bp.route("/<int:customer_id>", methods=['DELETE'])
 @token_required
 @limiter.limit("5 per day")  # Rate limit to 5 requests per day
-def delete_customer(customer_id):
-    customer = db.session.get(Customer, customer_id)
+def delete_customer(customer_id, token_customer_id=None):
+    if str(customer_id) != str(token_customer_id):
+        return jsonify({"error": "You can only delete your own customer account."}), 403
 
+    customer = db.session.get(Customer, customer_id)
     if not customer:
         return jsonify({"error": "Customer not found."}), 404
 

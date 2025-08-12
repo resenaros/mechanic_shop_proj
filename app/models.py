@@ -7,7 +7,7 @@ from typing import List
 # Create a base class for our models
 class Base(DeclarativeBase):
     pass
- 
+
 # Instantiate your SQLAlchemy database
 db = SQLAlchemy(model_class=Base)
 
@@ -43,7 +43,7 @@ class Ticket(Base):
     customer: Mapped['Customer'] = db.relationship(back_populates='tickets')
     mechanics: Mapped[List['Mechanic']] = db.relationship(secondary=ticket_mechanic, back_populates='tickets')
 
-     # --- Inventory Relationship ---
+    # --- Inventory Relationship ---
     parts: Mapped[List['Inventory']] = db.relationship(
         'Inventory',
         secondary='ticket_inventory',

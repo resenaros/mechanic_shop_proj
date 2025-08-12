@@ -1,0 +1,908 @@
+# MARK: define the Swagger API specification for a mechanic shop management system
+swagger: "2.0"
+info:
+  title: "Mechanic Shop API"
+  description: "API to manage customers, mechanics, tickets, and inventory for a mechanic shop."
+  version: "1.0.0"
+host: "127.0.0.1:5000"
+schemes:
+  - "http"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+# MARK: Security Definitions
+securityDefinitions:
+  bearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+
+paths:
+  # MARK: Customers Endpoints
+  /customers/login:
+    post:
+      tags: [Customers]
+      summary: "Customer login"
+      description: "Authenticate a customer and return a token."
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/LoginPayload"
+      responses:
+        200:
+          description: "Login successful"
+          schema:
+            $ref: "#/definitions/LoginResponse"
+          examples:
+            application/json:
+              token: "example_token"
+              message: "Login successful"
+
+  /customers:
+    post:
+      tags: [Customers]
+      summary: "Create new customer"
+      description: "Register a new customer."
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/CustomerCreate"
+      responses:
+        201:
+          description: "Customer created"
+          schema:
+            $ref: "#/definitions/Customer"
+        examples:
+          application/json:
+            id: 1
+            name: "John Doe"
+            email: "john.doe@example.com"
+
+    get:
+      tags: [Customers]
+      summary: "Get all customers"
+      description: "Retrieve all customers. Supports pagination."
+      parameters:
+        - in: "query"
+          name: "page"
+          type: "integer"
+          required: false
+        - in: "query"
+          name: "per_page"
+          type: "integer"
+          required: false
+      responses:
+        200:
+          description: "List of customers"
+          schema:
+            $ref: "#/definitions/CustomerList"
+          examples:
+            application/json:
+              - id: 1
+                name: "John Doe"
+                email: "john.doe@example.com"
+
+    put:
+      tags: [Customers]
+      summary: "Update customer (all fields)"
+      description: "Update all fields for a customer. Requires authentication."
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/CustomerUpdate"
+      responses:
+        200:
+          description: "Customer updated"
+          schema:
+            $ref: "#/definitions/Customer"
+          examples:
+            application/json:
+              id: 1
+              name: "John Doe"
+              email: "john.doe@example.com"
+
+    patch:
+      tags: [Customers]
+      summary: "Update customer (selected fields)"
+      description: "Update selected fields for a customer. Requires authentication."
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/CustomerPatch"
+      responses:
+        200:
+          description: "Customer updated"
+          schema:
+            $ref: "#/definitions/Customer"
+          examples:
+            application/json:
+              id: 1
+              name: "John Doe"
+              email: "john.doe@example.com"
+
+    delete:
+      tags: [Customers]
+      summary: "Delete customer"
+      description: "Delete a customer. Requires authentication."
+      security: [{ bearerAuth: [] }]
+      responses:
+        200:
+          description: "Customer deleted"
+          schema:
+            $ref: "#/definitions/DeleteResponse"
+          examples:
+            application/json:
+              message: "Customer deleted successfully"
+
+  /customers/{id}:
+    get:
+      tags: [Customers]
+      summary: "Get specific customer"
+      description: "Retrieve details for a specific customer by ID."
+      parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "Customer details"
+          schema:
+            $ref: "#/definitions/Customer"
+          examples:
+            application/json:
+              id: 1
+              name: "John Doe"
+              email: "john.doe@example.com"
+
+  # MARK: Mechanics Endpoints
+  /mechanics/login:
+    post:
+      tags: [Mechanics]
+      summary: "Mechanic login"
+      description: "Authenticate a mechanic and return a token."
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/LoginPayload"
+      responses:
+        200:
+          description: "Login successful"
+          schema:
+            $ref: "#/definitions/LoginResponse"
+          examples:
+            application/json:
+              token: "example_token"
+              message: "Login successful"
+
+  /mechanics:
+    post:
+      tags: [Mechanics]
+      summary: "Create mechanic"
+      description: "Register a new mechanic."
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/MechanicCreate"
+      responses:
+        201:
+          description: "Mechanic created"
+          schema:
+            $ref: "#/definitions/Mechanic"
+        examples:
+          application/json:
+            id: 1
+            name: "Jane Smith"
+            email: "jane.smith@example.com"
+
+    get:
+      tags: [Mechanics]
+      summary: "Get all mechanics"
+      description: "Retrieve all mechanics. Supports pagination."
+      parameters:
+        - in: "query"
+          name: "page"
+          type: "integer"
+          required: false
+        - in: "query"
+          name: "per_page"
+          type: "integer"
+          required: false
+      responses:
+        200:
+          description: "List of mechanics"
+          schema:
+            $ref: "#/definitions/MechanicList"
+          examples:
+            application/json:
+              - id: 1
+                name: "Jane Smith"
+                email: "jane.smith@example.com"
+
+  /mechanics/{id}:
+    get:
+      tags: [Mechanics]
+      summary: "Get specific mechanic"
+      description: "Retrieve details for a specific mechanic by ID."
+      parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "Mechanic details"
+          schema:
+            $ref: "#/definitions/Mechanic"
+          examples:
+            application/json:
+              id: 1
+              name: "Jane Smith"
+              email: "jane.smith@example.com"
+
+    put:
+      tags: [Mechanics]
+      summary: "Update mechanic (all fields)"
+      description: "Update all fields for a mechanic."
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/MechanicUpdate"
+      responses:
+        200:
+          description: "Mechanic updated"
+          schema:
+            $ref: "#/definitions/Mechanic"
+          examples:
+            application/json:
+              id: 1
+              name: "Jane Smith"
+              email: "jane.smith@example.com"
+
+    patch:
+      tags: [Mechanics]
+      summary: "Update mechanic (selected fields)"
+      description: "Update selected fields for a mechanic."
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/MechanicPatch"
+      responses:
+        200:
+          description: "Mechanic updated"
+          schema:
+            $ref: "#/definitions/Mechanic"
+          examples:
+            application/json: 
+              id: 1
+              name: "Jane Smith"
+              email: "jane.smith@example.com"
+
+    delete:
+      tags: [Mechanics]
+      summary: "Delete mechanic"
+      description: "Delete a mechanic."
+      responses:
+        200:
+          description: "Mechanic deleted"
+          schema:
+            $ref: "#/definitions/DeleteResponse"
+          examples:
+            application/json:
+              message: "Mechanic deleted successfully"
+
+  /mechanics/popular:
+    get:
+      tags: [Mechanics]
+      summary: "List mechanics by popularity"
+      description: "List mechanics ordered by popularity."
+      responses:
+        200:
+          description: "Popular mechanics"
+          schema:
+            $ref: "#/definitions/MechanicList"
+          examples:
+            application/json:
+              - id: 1
+                name: "Jane Smith"
+                email: "jane.smith@example.com"
+
+  /mechanics/search:
+    get:
+      tags: [Mechanics]
+      summary: "Search mechanics"
+      description: "Search for mechanics by name."
+      parameters:
+        - in: "query"
+          name: "name"
+          type: "string"
+          required: false
+      responses:
+        200:
+          description: "Mechanics search results"
+          schema:
+            $ref: "#/definitions/MechanicList"
+          examples:
+            application/json:
+              - id: 1
+                name: "Jane Smith"
+                email: "jane.smith@example.com"
+
+  # MARK: Tickets Endpoints
+  /tickets:
+    post:
+      tags: [Tickets]
+      summary: "Create ticket"
+      description: "Create a new service ticket."
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/TicketCreate"
+      responses:
+        201:
+          description: "Ticket created"
+          schema:
+            $ref: "#/definitions/Ticket"
+          examples:
+            application/json:
+              id: 1
+              customer_id: 1
+              ticket_date: "2023-10-01"
+              vin: "1HGCM82633A123456"
+              mechanics: [1, 2]
+              parts: [{ inventory_id: 1, quantity: 2 }]
+
+    get:
+      tags: [Tickets]
+      summary: "Get all tickets"
+      description: "Retrieve all tickets."
+      responses:
+        200:
+          description: "List of tickets"
+          schema:
+            $ref: "#/definitions/TicketList"
+          examples:
+            application/json:
+              - id: 1
+                customer_id: 1
+                ticket_date: "2023-10-01"
+                vin: "1HGCM82633A123456"
+                mechanics: [1, 2]
+                parts: [{ inventory_id: 1, quantity: 2 }]
+              - id: 2
+                customer_id: 2
+                ticket_date: "2023-10-02"
+                vin: "1HGCM82633A654321"
+                mechanics: [3]
+                parts: [{ inventory_id: 2, quantity: 1 }]
+
+  /tickets/my-tickets:
+    get:
+      tags: [Tickets]
+      summary: "Get my tickets"
+      description: "Retrieve tickets for the logged-in user."
+      security: [{ bearerAuth: [] }]
+      responses:
+        200:
+          description: "User's tickets"
+          schema:
+            $ref: "#/definitions/TicketList"
+          examples:
+            application/json:
+                id: 1
+                title: "Sample Ticket"
+                description: "This is a sample ticket."
+
+  /tickets/{id}:
+    get:
+      tags: [Tickets]
+      summary: "Get specific ticket"
+      description: "Retrieve a ticket by ID."
+      parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "Ticket details"
+          schema:
+            $ref: "#/definitions/Ticket"
+          examples:
+            application/json:
+              id: 1
+              title: "Sample Ticket"
+              description: "This is a sample ticket."
+
+    patch:
+      tags: [Tickets]
+      summary: "Update ticket (selected fields)"
+      description: "Update selected fields for a ticket."
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/TicketPatch"
+      responses:
+        200:
+          description: "Ticket updated"
+          schema:
+            $ref: "#/definitions/Ticket"
+          examples:
+            application/json:
+              id: 1
+              title: "Sample Ticket"
+              description: "This is a sample ticket."
+
+    put:
+      tags: [Tickets]
+      summary: "Assign/Remove mechanics from ticket"
+      description: "Add or remove mechanics assigned to a ticket."
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/TicketMechanicAssignment"
+      responses:
+        200:
+          description: "Ticket mechanics updated"
+          schema:
+            $ref: "#/definitions/Ticket"
+          examples:
+            application/json:
+              id: 1
+              customer_id: 1
+              ticket_date: "2023-10-01"
+              vin: "1HGCM82633A123456"
+              mechanics: [1, 2]
+              parts: [{ inventory_id: 1, quantity: 2 }]
+
+  /tickets/{id}/mechanics:
+    get:
+      tags: [Tickets]
+      summary: "Get mechanics assigned to ticket"
+      description: "Retrieve all mechanics assigned to a specific ticket."
+      parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "Mechanics assigned to ticket"
+          schema:
+            $ref: "#/definitions/MechanicList"
+          examples:
+            application/json:
+              - id: 1
+                name: "Mechanic One"
+                email: "mechanic.one@example.com"
+              - id: 2
+                name: "Mechanic Two"
+                email: "mechanic.two@example.com"
+
+  /tickets/{id}/assign-mechanic/{mech_id}:
+    put:
+      tags: [Tickets]
+      summary: "Assign mechanic to ticket"
+      description: "Assign a mechanic to a ticket."
+      parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          type: "integer"
+        - in: "path"
+          name: "mech_id"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "Mechanic assigned to ticket"
+          schema:
+            $ref: "#/definitions/Ticket"
+          examples:
+            application/json:
+              id: 1
+              customer_id: 1
+              ticket_date: "2023-10-01"
+              vin: "1HGCM82633A123456"
+              mechanics: [1, 2]
+              parts: [{ inventory_id: 1, quantity: 2 }]
+
+  /tickets/{id}/remove-mechanic/{mech_id}:
+    put:
+      tags: [Tickets]
+      summary: "Remove mechanic from ticket"
+      description: "Remove a mechanic from a ticket."
+      parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          type: "integer"
+        - in: "path"
+          name: "mech_id"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "Mechanic removed from ticket"
+          schema:
+            $ref: "#/definitions/Ticket"
+          examples:
+            application/json:
+              id: 1
+              customer_id: 1
+              ticket_date: "2023-10-01"
+              vin: "1HGCM82633A123456"
+              mechanics: [1, 2]
+              parts: [{ inventory_id: 1, quantity: 2 }]
+
+  /tickets/{id}/add-part:
+    post:
+      tags: [Tickets]
+      summary: "Add inventory item to ticket"
+      description: "Add an inventory item to a ticket (part usage)."
+      parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          type: "integer"
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/TicketPartAdd"
+      responses:
+        200:
+          description: "Inventory item added to ticket"
+          schema:
+            $ref: "#/definitions/Ticket"
+          examples:
+            application/json:
+              id: 1
+              customer_id: 1
+              ticket_date: "2023-10-01"
+              vin: "1HGCM82633A123456"
+              mechanics: [1, 2]
+              parts: [{ inventory_id: 1, quantity: 2 }]
+
+  # MARK: Inventory Endpoints
+  /inventory:
+    post:
+      tags: [Inventory]
+      summary: "Create inventory item"
+      description: "Add a new item to inventory."
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/InventoryCreate"
+      responses:
+        201:
+          description: "Inventory item created"
+          schema:
+            $ref: "#/definitions/Inventory"
+        examples:
+          application/json:
+            id: 1
+            name: "Sample Part"
+            description: "This is a sample part."
+            quantity: 10
+            price: 99.99
+
+    get:
+      tags: [Inventory]
+      summary: "Get all inventory items"
+      description: "Retrieve all inventory items."
+      responses:
+        200:
+          description: "List of inventory items"
+          schema:
+            $ref: "#/definitions/InventoryList"
+      examples:
+        application/json:
+          - id: 1
+            name: "Sample Part"
+            description: "This is a sample part."
+            quantity: 10
+            price: 99.99
+          - id: 2
+            name: "Another Part"
+            description: "This is another part."
+            quantity: 5
+            price: 49.99
+
+  /inventory/{id}:
+    get:
+      tags: [Inventory]
+      summary: "Get specific inventory item"
+      description: "Retrieve an inventory item by ID."
+      parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "Inventory item details"
+          schema:
+            $ref: "#/definitions/Inventory"
+          examples:
+            application/json:
+              id: 1
+              name: "Sample Part"
+              description: "This is a sample part."
+              quantity: 10
+              price: 99.99
+
+    put:
+      tags: [Inventory]
+      summary: "Update inventory item (all fields)"
+      description: "Update all fields of an inventory item."
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/InventoryUpdate"
+      responses:
+        200:
+          description: "Inventory item updated"
+          schema:
+            $ref: "#/definitions/Inventory"
+          examples:
+            application/json:
+              id: 1
+              name: "Sample Part"
+              description: "This is a sample part."
+              quantity: 10
+              price: 99.99
+
+    patch:
+      tags: [Inventory]
+      summary: "Update inventory item (selected fields)"
+      description: "Update selected fields of an inventory item."
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/InventoryPatch"
+      responses:
+        200:
+          description: "Inventory item updated"
+          schema:
+            $ref: "#/definitions/Inventory"
+            examples:
+              application/json:
+                id: 1
+                name: "Sample Part"
+                description: "This is a sample part."
+                quantity: 10
+                price: 99.99
+
+    delete:
+      tags: [Inventory]
+      summary: "Delete inventory item"
+      description: "Delete an inventory item."
+      responses:
+        200:
+          description: "Inventory item deleted"
+          schema:
+            $ref: "#/definitions/DeleteResponse"
+          examples:
+            application/json:
+              message: "Inventory item deleted successfully"
+
+# MARK: API Definitions
+definitions:
+  LoginPayload:
+    type: "object"
+    properties:
+      email: { type: "string" }
+      password: { type: "string" }
+    required: [email, password]
+
+  LoginResponse:
+    type: "object"
+    properties:
+      token: { type: "string" }
+      message: { type: "string" }
+
+  CustomerCreate:
+    type: "object"
+    properties:
+      name: { type: "string" }
+      email: { type: "string" }
+      phone: { type: "string" }
+      password: { type: "string" }
+    required: [name, email, phone, password]
+
+  CustomerUpdate:
+    type: "object"
+    properties:
+      name: { type: "string" }
+      email: { type: "string" }
+      phone: { type: "string" }
+      password: { type: "string" }
+    required: [name, email, phone, password]
+
+  CustomerPatch:
+    type: "object"
+    properties:
+      name: { type: "string" }
+      email: { type: "string" }
+      phone: { type: "string" }
+      password: { type: "string" }
+
+  Customer:
+    type: "object"
+    properties:
+      id: { type: "integer" }
+      name: { type: "string" }
+      email: { type: "string" }
+      phone: { type: "string" }
+
+  CustomerList:
+    type: "array"
+    items:
+      $ref: "#/definitions/Customer"
+
+  MechanicCreate:
+    type: "object"
+    properties:
+      name: { type: "string" }
+      email: { type: "string" }
+      phone: { type: "string" }
+      salary: { type: "number", format: "float" }
+      password: { type: "string" }
+    required: [name, email, phone, salary, password]
+
+  MechanicUpdate:
+    type: "object"
+    properties:
+      name: { type: "string" }
+      email: { type: "string" }
+      phone: { type: "string" }
+      salary: { type: "number", format: "float" }
+      password: { type: "string" }
+    required: [name, email, phone, salary, password]
+
+  MechanicPatch:
+    type: "object"
+    properties:
+      name: { type: "string" }
+      email: { type: "string" }
+      phone: { type: "string" }
+      salary: { type: "number", format: "float" }
+      password: { type: "string" }
+
+  Mechanic:
+    type: "object"
+    properties:
+      id: { type: "integer" }
+      name: { type: "string" }
+      email: { type: "string" }
+      phone: { type: "string" }
+      salary: { type: "number", format: "float" }
+
+  MechanicList:
+    type: "array"
+    items:
+      $ref: "#/definitions/Mechanic"
+
+  TicketCreate:
+    type: "object"
+    properties:
+      customer_id: { type: "integer" }
+      ticket_date: { type: "string", format: "date" }
+      vin: { type: "string" }
+    required: [customer_id, ticket_date, vin]
+
+  TicketPatch:
+    type: "object"
+    properties:
+      ticket_date: { type: "string", format: "date" }
+      vin: { type: "string" }
+
+  TicketMechanicAssignment:
+    type: "object"
+    properties:
+      add_mechanic_ids:
+        type: "array"
+        items: { type: "integer" }
+      remove_mechanic_ids:
+        type: "array"
+        items: { type: "integer" }
+
+  TicketPartAdd:
+    type: "object"
+    properties:
+      inventory_id: { type: "integer" }
+      quantity: { type: "integer" }
+    required: [inventory_id, quantity]
+
+  Ticket:
+    type: "object"
+    properties:
+      id: { type: "integer" }
+      customer_id: { type: "integer" }
+      ticket_date: { type: "string" }
+      vin: { type: "string" }
+      mechanics:
+        type: "array"
+        items: { type: "integer" }
+      parts:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            inventory_id: { type: "integer" }
+            quantity: { type: "integer" }
+
+  TicketList:
+    type: "array"
+    items:
+      $ref: "#/definitions/Ticket"
+
+  InventoryCreate:
+    type: "object"
+    properties:
+      name: { type: "string" }
+      price: { type: "number", format: "float" }
+    required: [name, price]
+
+  InventoryUpdate:
+    type: "object"
+    properties:
+      name: { type: "string" }
+      price: { type: "number", format: "float" }
+    required: [name, price]
+
+  InventoryPatch:
+    type: "object"
+    properties:
+      name: { type: "string" }
+      price: { type: "number", format: "float" }
+
+  Inventory:
+    type: "object"
+    properties:
+      id: { type: "integer" }
+      name: { type: "string" }
+      price: { type: "number", format: "float" }
+
+  InventoryList:
+    type: "array"
+    items:
+      $ref: "#/definitions/Inventory"
+
+  DeleteResponse:
+    type: "object"
+    properties:
+      message: { type: "string" }
