@@ -88,12 +88,38 @@ paths:
                 name: "John Doe"
                 email: "john.doe@example.com"
 
+  /customers/{id}:
+    get:
+      tags: [Customers]
+      summary: "Get specific customer"
+      description: "Retrieve details for a specific customer by ID."
+      parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "Customer details"
+          schema:
+            $ref: "#/definitions/Customer"
+          examples:
+            application/json:
+              id: 1
+              name: "John Doe"
+              email: "john.doe@example.com"
+
     put:
       tags: [Customers]
       summary: "Update customer (all fields)"
       description: "Update all fields for a customer. Requires authentication."
       security: [{ bearerAuth: [] }]
       parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          type: "integer"
+          description: "ID of the customer to update"
         - in: "body"
           name: "body"
           required: true
@@ -116,6 +142,11 @@ paths:
       description: "Update selected fields for a customer. Requires authentication."
       security: [{ bearerAuth: [] }]
       parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          type: "integer"
+          description: "ID of the customer to update"
         - in: "body"
           name: "body"
           required: true
@@ -137,6 +168,12 @@ paths:
       summary: "Delete customer"
       description: "Delete a customer. Requires authentication."
       security: [{ bearerAuth: [] }]
+      parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          type: "integer"
+          description: "ID of the customer to delete"
       responses:
         200:
           description: "Customer deleted"
@@ -145,27 +182,6 @@ paths:
           examples:
             application/json:
               message: "Customer deleted successfully"
-
-  /customers/{id}:
-    get:
-      tags: [Customers]
-      summary: "Get specific customer"
-      description: "Retrieve details for a specific customer by ID."
-      parameters:
-        - in: "path"
-          name: "id"
-          required: true
-          type: "integer"
-      responses:
-        200:
-          description: "Customer details"
-          schema:
-            $ref: "#/definitions/Customer"
-          examples:
-            application/json:
-              id: 1
-              name: "John Doe"
-              email: "john.doe@example.com"
 
   # MARK: Mechanics Endpoints
   /mechanics/login:
@@ -260,7 +276,13 @@ paths:
       tags: [Mechanics]
       summary: "Update mechanic (all fields)"
       description: "Update all fields for a mechanic."
+      security: [{ bearerAuth: [] }]
       parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          type: "integer"
+          description: "ID of the mechanic to update"
         - in: "body"
           name: "body"
           required: true
@@ -281,7 +303,13 @@ paths:
       tags: [Mechanics]
       summary: "Update mechanic (selected fields)"
       description: "Update selected fields for a mechanic."
+      security: [{ bearerAuth: [] }]
       parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          type: "integer"
+          description: "ID of the mechanic to update"
         - in: "body"
           name: "body"
           required: true
@@ -293,7 +321,7 @@ paths:
           schema:
             $ref: "#/definitions/Mechanic"
           examples:
-            application/json: 
+            application/json:
               id: 1
               name: "Jane Smith"
               email: "jane.smith@example.com"
@@ -302,6 +330,13 @@ paths:
       tags: [Mechanics]
       summary: "Delete mechanic"
       description: "Delete a mechanic."
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          type: "integer"
+          description: "ID of the mechanic to delete"
       responses:
         200:
           description: "Mechanic deleted"
@@ -347,6 +382,24 @@ paths:
               - id: 1
                 name: "Jane Smith"
                 email: "jane.smith@example.com"
+
+  /mechanics/protected:
+    get:
+      tags: [Mechanics]
+      summary: "Mechanic protected route"
+      description: "A protected route for mechanics. Requires authentication."
+      security: [{ bearerAuth: [] }]
+      responses:
+        200:
+          description: "Protected mechanic route"
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+            examples:
+              application/json:
+                message: "Access granted"
 
   # MARK: Tickets Endpoints
   /tickets:
@@ -411,9 +464,9 @@ paths:
             $ref: "#/definitions/TicketList"
           examples:
             application/json:
-                id: 1
-                title: "Sample Ticket"
-                description: "This is a sample ticket."
+              id: 1
+              title: "Sample Ticket"
+              description: "This is a sample ticket."
 
   /tickets/{id}:
     get:
