@@ -20,6 +20,8 @@ class TestingConfig:
     CACHE_TYPE = 'SimpleCache'  # Use simple cache for testing
     SQLALCHEMY_TRACK_MODIFICATIONS = False    
 
+# MARK: 
+# NOTE: Connection String is stored in the environment variable SQLALCHEMY_DATABASE_URI
 class ProductionConfig:
     SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
     CACHE_TYPE = "SimpleCache"

@@ -1,4 +1,5 @@
-// TODO update Host url or update postman collection
+// MARK: 
+// NOTE: update Host url or update postman collection
 {
   "info": {
     "_postman_id": "d82da2b9-cd74-4ed9-aff5-2e8153bc13dd",
@@ -14,25 +15,18 @@
         {
           "name": "Customer Login",
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"email\": \"john@example.com\",\r\n    \"password\": \"secret\"\r\n}\r\n    \r\n    ",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/customers/login",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/customers/login",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["customers", "login"]
             }
           },
@@ -41,25 +35,18 @@
         {
           "name": "Create Customer",
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"name\": \"Shredder Doe\",\r\n    \"email\": \"Shredder@example.com\",\r\n    \"phone\": \"555-1234\",\r\n    \"password\": \"secret\"\r\n}\r\n \r\n    \r\n    ",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/customers",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/customers",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["customers"]
             }
           },
@@ -67,29 +54,20 @@
         },
         {
           "name": "Get All Customers",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
+          "protocolProfileBehavior": { "disableBodyPruning": true },
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "GET",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"email\": \"Donatello@example.com\",\r\n    \"name\": \"Donatello\",\r\n    \"phone\": \"1234567890\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/customers",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/customers",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["customers"]
             }
           },
@@ -97,39 +75,24 @@
         },
         {
           "name": "GET All Customers (Pagination)",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
+          "protocolProfileBehavior": { "disableBodyPruning": true },
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "GET",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"author\": \"Alexandre Dumas\",\r\n    \"desc\": \"A band of four fighting for honor\",\r\n    \"genre\": \"Adventure-Romance\",\r\n    \"title\":\"The Three Musketeers\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/customers?page=1&per_page=3",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/customers?page=1&per_page=3",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["customers"],
               "query": [
-                {
-                  "key": "page",
-                  "value": "1"
-                },
-                {
-                  "key": "per_page",
-                  "value": "3"
-                }
+                { "key": "page", "value": "1" },
+                { "key": "per_page", "value": "3" }
               ]
             }
           },
@@ -137,29 +100,20 @@
         },
         {
           "name": "Get Specific Customer",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
+          "protocolProfileBehavior": { "disableBodyPruning": true },
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "GET",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"email\": \"Donatello@example.com\",\r\n    \"name\": \"Donatello\",\r\n    \"phone\": \"1234567890\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/customers/2",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/customers/2",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["customers", "2"]
             }
           },
@@ -183,17 +137,12 @@
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"name\": \"John Doe\",\r\n    \"email\": \"john@example.com\",\r\n    \"phone\": \"555-1234\",\r\n    \"password\": \"secret\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/customers",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/customers",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["customers"]
             }
           },
@@ -217,17 +166,12 @@
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"name\": \"John Doe\",\r\n    \"email\": \"john@example.com\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/customers",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/customers",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["customers"]
             }
           },
@@ -251,17 +195,12 @@
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"email\": \"RaphaelT@example.com\",\r\n    \"id\": 5,\r\n    \"name\": \"Raphael T\",\r\n    \"phone\": \"1234567890\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/customers",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/customers",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["customers"]
             }
           },
@@ -275,25 +214,18 @@
         {
           "name": "Mechanic Login",
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "\r\n{\r\n    \"email\": \"UrielA@example.com\",\r\n    \"password\": \"mechanicpass\"\r\n}\r\n\r\n\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/mechanics/login",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/mechanics/login",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["mechanics", "login"]
             }
           },
@@ -301,9 +233,7 @@
         },
         {
           "name": "Test Mechanic Protected Route",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
+          "protocolProfileBehavior": { "disableBodyPruning": true },
           "request": {
             "auth": {
               "type": "bearer",
@@ -320,17 +250,12 @@
             "body": {
               "mode": "raw",
               "raw": "\r\n{\r\n    \"email\": \"UrielA@example.com\",\r\n    \"password\": \"mechanicpass\"\r\n}\r\n\r\n\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/mechanics/protected",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/mechanics/protected",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["mechanics", "protected"]
             }
           },
@@ -339,25 +264,18 @@
         {
           "name": "Create Mechanic",
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "\r\n{\r\n    \"email\": \"GabrielA@example.com\",\r\n    \"name\": \"Gabriel\",\r\n    \"phone\": \"0987654321\",\r\n    \"salary\": 75000\r\n    \r\n}\r\n\r\n\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/mechanics",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/mechanics",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["mechanics"]
             }
           },
@@ -365,29 +283,20 @@
         },
         {
           "name": "Get All Mechanics",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
+          "protocolProfileBehavior": { "disableBodyPruning": true },
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "GET",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "\r\n{\r\n    \"email\": \"GabrielA@example.com\",\r\n    \"name\": \"Gabriel\",\r\n    \"phone\": \"0987654321\",\r\n    \"salary\": 75000\r\n    \r\n}\r\n\r\n\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/mechanics",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/mechanics",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["mechanics"]
             }
           },
@@ -395,39 +304,24 @@
         },
         {
           "name": "GET All Mechanics (Pagination)",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
+          "protocolProfileBehavior": { "disableBodyPruning": true },
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "GET",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"author\": \"Alexandre Dumas\",\r\n    \"desc\": \"A band of four fighting for honor\",\r\n    \"genre\": \"Adventure-Romance\",\r\n    \"title\":\"The Three Musketeers\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/mechanics?page=3&per_page=2",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/mechanics?page=3&per_page=2",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["mechanics"],
               "query": [
-                {
-                  "key": "page",
-                  "value": "3"
-                },
-                {
-                  "key": "per_page",
-                  "value": "2"
-                }
+                { "key": "page", "value": "3" },
+                { "key": "per_page", "value": "2" }
               ]
             }
           },
@@ -435,29 +329,20 @@
         },
         {
           "name": "Get Specific Mechanic",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
+          "protocolProfileBehavior": { "disableBodyPruning": true },
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "GET",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "\r\n{\r\n    \"email\": \"GabrielA@example.com\",\r\n    \"name\": \"Gabriel\",\r\n    \"phone\": \"0987654321\",\r\n    \"salary\": 75000\r\n    \r\n}\r\n\r\n\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/mechanics/2",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/mechanics/2",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["mechanics", "2"]
             }
           },
@@ -466,25 +351,18 @@
         {
           "name": "Update Mechanic (All Fields)",
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "PUT",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "\r\n{\r\n    \"email\": \"MichaelA@example.com\",\r\n    \"id\": 2,\r\n    \"name\": \"Michael A.\",\r\n    \"phone\": \"0987654321\",\r\n    \"salary\": 75000.0\r\n}\r\n\r\n\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/mechanics/2",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/mechanics/2",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["mechanics", "2"]
             }
           },
@@ -493,25 +371,18 @@
         {
           "name": "Update Mechanic (Selected Fields)",
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "PATCH",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "\r\n{\r\n    \"password\": \"mechanicpass\"\r\n}\r\n\r\n\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/mechanics/1",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/mechanics/1",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["mechanics", "1"]
             }
           },
@@ -520,25 +391,18 @@
         {
           "name": "Delete Mechanic ",
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "DELETE",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "\r\n{\r\n    \"name\": \"Raphael A.\"\r\n}\r\n\r\n\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/mechanics/3",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/mechanics/3",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["mechanics", "3"]
             }
           },
@@ -546,29 +410,20 @@
         },
         {
           "name": "List Mechanics by Popularity",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
+          "protocolProfileBehavior": { "disableBodyPruning": true },
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "GET",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"author\": \"George orwell\",\r\n    \"desc\": \"Soviet Russia but with animals\",\r\n    \"genre\": \"Dystopian-Family-Friendly\",\r\n    \"title\":\"Animal Farm\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/mechanics/popular",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/mechanics/popular",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["mechanics", "popular"]
             }
           },
@@ -576,36 +431,22 @@
         },
         {
           "name": "Search Mechanic",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
+          "protocolProfileBehavior": { "disableBodyPruning": true },
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "GET",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"author\": \"George orwell\",\r\n    \"desc\": \"Soviet Russia but with animals\",\r\n    \"genre\": \"Dystopian-Family-Friendly\",\r\n    \"title\":\"Animal Farm\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/mechanics/search?name=ael",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/mechanics/search?name=ael",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["mechanics", "search"],
-              "query": [
-                {
-                  "key": "name",
-                  "value": "ael"
-                }
-              ]
+              "query": [{ "key": "name", "value": "ael" }]
             }
           },
           "response": []
@@ -618,25 +459,18 @@
         {
           "name": "Create Ticket",
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"customer_id\": 3,\r\n    \"ticket_date\": \"2025-03-03\",\r\n    \"vin\": \"2345678901\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/tickets",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/tickets",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["tickets"]
             }
           },
@@ -644,29 +478,20 @@
         },
         {
           "name": "Get All Tickets (Cached)",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
+          "protocolProfileBehavior": { "disableBodyPruning": true },
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "GET",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"customer_id\": 3,\r\n    \"ticket_date\": \"2025-03-03\",\r\n    \"vin\": \"2345678901\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/tickets",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/tickets",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["tickets"]
             }
           },
@@ -674,9 +499,7 @@
         },
         {
           "name": "Get My-Tickets",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
+          "protocolProfileBehavior": { "disableBodyPruning": true },
           "request": {
             "auth": {
               "type": "bearer",
@@ -693,17 +516,12 @@
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"customer_id\": 3,\r\n    \"ticket_date\": \"2025-03-03\",\r\n    \"vin\": \"2345678901\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/tickets/my-tickets",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/tickets/my-tickets",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["tickets", "my-tickets"]
             }
           },
@@ -712,25 +530,18 @@
         {
           "name": "Update Ticket (Selected Fields)",
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "PATCH",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \r\n    \"vin\": \"3456789012\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/tickets/1",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/tickets/1",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["tickets", "1"]
             }
           },
@@ -754,17 +565,12 @@
             "body": {
               "mode": "raw",
               "raw": "{\r\n   \"add_mechanic_ids\": [3],\r\n   \"remove_mechanic_ids\": [4]\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/tickets/1",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/tickets/1",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["tickets", "1"]
             }
           },
@@ -772,29 +578,20 @@
         },
         {
           "name": "Get All Mechanics Assigned to a Specific Ticket",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
+          "protocolProfileBehavior": { "disableBodyPruning": true },
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "GET",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"customer_id\": 3,\r\n    \"ticket_date\": \"2025-03-03\",\r\n    \"vin\": \"2345678901\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/tickets/1/mechanics",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/tickets/1/mechanics",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["tickets", "1", "mechanics"]
             }
           },
@@ -803,25 +600,18 @@
         {
           "name": "Assign Mechanic to Ticket",
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "PUT",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"customer_id\": 5,\r\n    \"ticket_date\": \"2025-03-03\",\r\n    \"vin\": \"2345678901\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/tickets/2/assign-mechanic/3",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/tickets/2/assign-mechanic/3",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["tickets", "2", "assign-mechanic", "3"]
             }
           },
@@ -830,25 +620,18 @@
         {
           "name": "Remove Mechanic from Ticket",
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "PUT",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{\r\n    \"customer_id\": 3,\r\n    \"ticket_date\": \"2025-03-03\",\r\n    \"vin\": \"2345678901\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/tickets/1/remove-mechanic/1",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/tickets/1/remove-mechanic/1",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["tickets", "1", "remove-mechanic", "1"]
             }
           },
@@ -857,25 +640,18 @@
         {
           "name": "Add Inventory Item to Ticket",
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{ \r\n    \"inventory_id\": 1, \r\n    \"quantity\": 2 \r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/tickets/1/add-part",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/tickets/1/add-part",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["tickets", "1", "add-part"]
             }
           },
@@ -889,25 +665,18 @@
         {
           "name": "Create inventory Item",
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{ \r\n    \"name\": \"Brake Pads\", \r\n    \"price\": 49.99 \r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/inventory",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/inventory",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["inventory"]
             }
           },
@@ -915,29 +684,20 @@
         },
         {
           "name": "Get All inventory Items",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
+          "protocolProfileBehavior": { "disableBodyPruning": true },
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "GET",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{ \r\n    \"name\": \"Oil Filter\", \r\n    \"price\": 19.99 \r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/inventory",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/inventory",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["inventory"]
             }
           },
@@ -945,29 +705,20 @@
         },
         {
           "name": "Get Selected inventory Items",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
+          "protocolProfileBehavior": { "disableBodyPruning": true },
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "GET",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{ \r\n    \"name\": \"Oil Filter\", \r\n    \"price\": 19.99 \r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/inventory/2",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/inventory/2",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["inventory", "2"]
             }
           },
@@ -976,25 +727,18 @@
         {
           "name": "Update Selected inventory Item (All Fields Required)",
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "PUT",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{ \r\n    \"name\": \"Oil Filter\", \r\n    \"price\": 24.99 \r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/inventory/1",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/inventory/1",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["inventory", "1"]
             }
           },
@@ -1003,25 +747,18 @@
         {
           "name": "Update Selected inventory Item (Selected Fields)",
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "PATCH",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{ \r\n    \"price\": 14.99 \r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/inventory/1",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/inventory/1",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["inventory", "1"]
             }
           },
@@ -1030,25 +767,18 @@
         {
           "name": "Delete Selected inventory Item",
           "request": {
-            "auth": {
-              "type": "noauth"
-            },
+            "auth": { "type": "noauth" },
             "method": "DELETE",
             "header": [],
             "body": {
               "mode": "raw",
               "raw": "{ \r\n    \"name\": \"Oil Filter\", \r\n    \"price\": 24.99 \r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+              "options": { "raw": { "language": "json" } }
             },
             "url": {
-              "raw": "http://127.0.0.1:5000/inventory/2",
-              "protocol": "http",
-              "host": ["127", "0", "0", "1"],
-              "port": "5000",
+              "raw": "https://mechanic-shop-proj.onrender.com/inventory/2",
+              "protocol": "https",
+              "host": ["mechanic-shop-proj", "onrender", "com"],
               "path": ["inventory", "2"]
             }
           },

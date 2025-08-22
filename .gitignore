@@ -8,3 +8,5 @@ instance/
 .vscode/
 .idea/
 .DS_Store
+
+# ? Ignore Postman collection export files
